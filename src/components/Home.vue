@@ -36,25 +36,12 @@ html {
 }
 </style>
 
-
 <script>
 export default {
-  data() {
-    return {
-      meetups: [
-        {
-          imageUrl: "https://via.placeholder.com/1920x1080",
-          id: "123abc",
-          title: "title 1"
-        },
-        {
-          imageUrl: "https://via.placeholder.com/1920x1080",
-          id: "1234abc",
-          title: "title 2"
-        }
-      ]
-    };
+  computed: {
+    meetups () {
+      return this.$store.getters.featuredMeetups
+    }
   }
-};
+}
 </script>
-
