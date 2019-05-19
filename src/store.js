@@ -10,13 +10,17 @@ export default new Vuex.Store({
         imageUrl: 'https://via.placeholder.com/1920x1080?text=Rome',
         id: '123abc',
         title: 'title 1',
-        date: '2019-07-01'
+        date: new Date(),
+        location: 'Rome',
+        description: 'welcome to Rome yo'
       },
       {
         imageUrl: 'https://via.placeholder.com/1920x1080?text=France',
         id: '1234abc',
         title: 'title 2',
-        date: '2017-07-01'
+        date: new Date(),
+        location: 'France',
+        description: 'France yo!@'
       }
     ],
     user: {
@@ -24,18 +28,35 @@ export default new Vuex.Store({
       registeredMeetups: ['123abc']
     }
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    createMeetup (state, payload) {
+      state.loadedMeetups.push(payload)
+    }
+  },
+  actions: {
+    createMeetup ({ commit }, payload) {
+      const meetup = {
+        title: payload.title,
+        location: payload.location,
+        imageUrl: payload.imageUrl,
+        description: payload.description,
+        date: payload.date,
+        id: 'yeaboi'
+      }
+      // Connect to firebase and store the data
+      commit('createMeetup', meetup)
+    }
+  },
   getters: {
-    loadedMeetups(state) {
+    loadedMeetups (state) {
       return state.loadedMeetups.sort((meetupA, meetupB) => {
         return meetupA.date > meetupB.date
       })
     },
-    featuredMeetups(state, getters) {
+    featuredMeetups (state, getters) {
       return getters.loadedMeetups.slice(0, 5)
     },
-    loadedMeetup(state) {
+    loadedMeetup (state) {
       return (meetupId) => {
         return state.loadedMeetups.find((meetup) => {
           return meetup.id === meetupId
