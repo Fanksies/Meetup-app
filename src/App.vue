@@ -15,13 +15,22 @@
         <v-list class="pt-0" dense>
           <v-divider></v-divider>
 
-          <v-list-tile v-for="item in items" :key="item.title" router :to="item.link" @click>
+          <v-list-tile v-for="item in menuItems" :key="item.title" router :to="item.link" @click>
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
 
             <v-list-tile-content>
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+           <v-list-tile v-if="userIsAuthenticated" @click="onLogout">
+            <v-list-tile-action>
+              <v-icon>exit_to_app</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>Log Out</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -33,9 +42,13 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn v-for="item in items" :key="item.title" router :to="item.link" flat>
-              <v-icon left>{{ item.icon }}</v-icon>
-              {{ item.title }}
+          <v-btn v-for="item in menuItems" :key="item.title" router :to="item.link" flat>
+            <v-icon left>{{ item.icon }}</v-icon>
+            {{ item.title }}
+          </v-btn>
+          <v-btn flat v-if="userIsAuthenticated" @click="onLogout">
+            <v-icon left>exit_to_app</v-icon>
+            Log Out
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
@@ -52,27 +65,37 @@
 </style>
 
 <script>
-export default {
-  // name: 'App',
-  // components: {
-  // },
-  data() {
-    return {
-      drawer: null,
-      appTitle: "Meetup App",
-      items: [
-        { title: "Sign Up", icon: "dashboard", link: "/SignUp" },
-        { title: "Sign In", icon: "question_answer", link: "/SignIn" },
-        { title: "Find a Meetup", icon: "question_answer", link: "/Meetups" },
-        { title: "Profile", icon: "question_answer", link: "/Profile" },
-        {
-          title: "Quiero dar una charla",
-          icon: "question_answer",
-          link: "/Meetups/create"
+ export default {
+    data () {
+      return {
+        drawer:null,
+        appTitle: 'yea boi',
+        sideNav: false
+      }
+    },
+   computed: {
+      menuItems () {
+        let menuItems = [
+          {icon: 'face', title: 'Sign up', link: '/signup'},
+          {icon: 'lock_open', title: 'Sign in', link: '/signin'}
+        ]
+        if (this.userIsAuthenticated) {
+          menuItems = [
+            {icon: 'supervisor_account', title: 'View Meetups', link: '/meetups'},
+            {icon: 'room', title: 'Organize Meetup', link: '/meetup/new'},
+            {icon: 'person', title: 'Profile', link: '/profile'}
+          ]
         }
-        // { title: "Sign Out", icon: "question_answer", link:"" }
-      ]
-    };
+        return menuItems
+      },
+      userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      }
+    },
+    methods: {
+      onLogout () {
+        this.$store.dispatch('logout')
+      }
+    }
   }
-};
 </script>
