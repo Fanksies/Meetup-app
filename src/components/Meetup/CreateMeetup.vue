@@ -3,7 +3,7 @@
     <v-container>
       <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
-          <h4>Create a new Meetup</h4>
+          <h1>Llena el siguiente formulario y revisaremos tu solicitud</h1>
         </v-flex>
       </v-layout>
       <v-layout row>
@@ -11,14 +11,24 @@
           <form @submit.prevent="onCreateMeetup">
             <v-layout row>
               <v-flex xs12 sm6 offset-sm3>
-                <v-text-field name="title" label="Title" id="title" v-model="title" required></v-text-field>
+                <v-text-field name="contacto" label="Nombre de contacto" id="contacto" v-model="contacto" required></v-text-field>
+              </v-flex>
+            </v-layout>
+            <v-layout row>
+              <v-flex xs12 sm6 offset-sm3>
+                <v-text-field name="title" label="Titulo de la charla" id="title" v-model="title" required></v-text-field>
+              </v-flex>
+            </v-layout>            
+             <v-layout row>
+              <v-flex xs12 sm6 offset-sm3>
+                <v-text-field name="bio" label="Cuéntanos de ti" id="bio" required></v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row>
               <v-flex xs12 sm6 offset-sm3>
                 <v-text-field
                   name="location"
-                  label="Location"
+                  label="Ubicación"
                   id="location"
                   v-model="location"
                   required
@@ -27,7 +37,18 @@
             </v-layout>
             <v-layout row>
               <v-flex xs12 sm6 offset-sm3>
-                <v-btn raised class="primary" @click="onPickFile">Upload Image</v-btn>
+                <v-text-field
+                  name="description"
+                  label="Describe tu evento"
+                  id="description"
+                  v-model="description"
+                  required
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
+            <v-layout row>
+              <v-flex xs12 sm6 offset-sm3>
+                <v-btn raised class="primary" @click="onPickFile">Subir Imagen</v-btn>
                 <input 
                 type="file" 
                 style="display:none" 
@@ -43,18 +64,7 @@
             </v-layout>
             <v-layout row>
               <v-flex xs12 sm6 offset-sm3>
-                <v-text-field
-                  name="description"
-                  label="Description"
-                  id="description"
-                  v-model="description"
-                  required
-                ></v-text-field>
-              </v-flex>
-            </v-layout>
-            <v-layout row>
-              <v-flex xs12 sm6 offset-sm3>
-                <h4>Choose a Date & Time</h4>
+                <!-- <h4>Fecha y hora de tu charla</h4> -->
               </v-flex>
             </v-layout>
             <v-layout row class="mb-2">
@@ -67,9 +77,14 @@
                 <v-time-picker v-model="time"></v-time-picker>
               </v-flex>
             </v-layout>
+             <v-layout row>
+              <v-flex xs12 sm6 offset-sm3>
+                <v-text-field name="social" label="Redes Sociales (opcional)" id="social"></v-text-field>
+              </v-flex>
+            </v-layout>
             <v-layout row>
               <v-flex xs12 sm6 offset-sm3>
-                <v-btn class="primary" :disabled="!formIsValid" type="submit">Create Meetup</v-btn>
+                <v-btn class="primary" :disabled="!formIsValid" type="submit">Enviar</v-btn>
               </v-flex>
             </v-layout>
           </form>
